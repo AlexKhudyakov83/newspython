@@ -8,5 +8,9 @@ Post
 
 
 {% block content %}
-<h1>{{ news }}</h1>
+    <h2>Новость дня</h2>
+    <hr>
+    <h1>{{ Post.title }}</h1>
+    <h2>{{ Post.text }}</h2>
+    <h2>{{ news }}</h2>
 {% endblock content %}

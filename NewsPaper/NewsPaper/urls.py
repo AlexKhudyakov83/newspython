@@ -22,6 +22,6 @@ urlpatterns = [
     path('homepage/', include('django.contrib.flatpages.urls')),
 
     path('news/', include('news.urls')),
-    # path('news/<int:pk>', include('news.urls')),
+    path('news/<int:pk>', include('news.urls')),
     path('news/3/', include('django.contrib.flatpages.urls'))
 ]
