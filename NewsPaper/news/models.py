@@ -42,7 +42,7 @@ class Post(models.Model):
     rating = models.SmallIntegerField(default=0)
 
     def __str__(self):
-        return f'{self.title[:30]}: {self.text[:1028]}'
+        return f'{self.title[:32]}: {self.text[:1028]}'
 
     def like(self):
         self.rating += 1

@@ -5,29 +5,30 @@ from .models import Author, Post
 from datetime import datetime
 from pprint import pprint
 
-# class Author(ListView):
-#     model = Author
-#     ordering = 'name'
-#     template_name = 'author.html'
-#     context_object_name = 'authors'
+
+class Author(ListView):
+    model = Author
+    ordering = 'name'
+    template_name = 'author.html'
+    context_object_name = 'authors'
+
 
 class PostList(ListView):
     model = Post
-    ordering = 'rating'
+    ordering = 'title'
     template_name = 'news.html'
-    context_object_name = 'post'
-
+    context_object_name = 'posts'
 
     def get_context_data(self, **kwargs):
-
         context = super().get_context_data(**kwargs)
         # К словарю добавим текущую дату в ключ 'time_now'.
         context['time_now'] = datetime.utcnow()
         # Добавим ещё одну пустую переменную,
         # чтобы на её примере рассмотреть работу ещё одного фильтра.
-        context['next_sale'] = None
+        context['next_news'] = None
         pprint(context)
         return context
+
 
 class PostDetail(DetailView):
     model = Post
