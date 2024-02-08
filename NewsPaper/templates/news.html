@@ -1,13 +1,22 @@
 {% extends 'flatpages/default.html' %}
 
+{% load custom_tags %}
+
 {% block title %}
 Posts
 {% endblock title %}
 
 {% block content %}
    <h1>Все новости</h1>
-   <h3>{{ time_now|date:'M d Y' }}</h3>
+<!--   <h3>{{ time_now|date:'M d Y' }}</h3>-->
     <h3> {{ next_news|default_if_none:"Для Вас только свежие новости." }} </h3>
+   {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
+   <form action="" method="get">
+       {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
+       {{ filterset.form.as_p }}
+       {# Добавим кнопку отправки данных формы #}
+       <input type="submit" value="Найти" />
+   </form>
    <hr>
    {% if posts %}
        <table>
@@ -34,7 +43,7 @@ Posts
    {% endif %}
 
     {% if page_obj.has_previous %}
-       <a href="?page=1">1</a>
+       <a href="?{% url_replace page=1 %}">1</a>
        {% if page_obj.previous_page_number != 1 %}
            ...
            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
