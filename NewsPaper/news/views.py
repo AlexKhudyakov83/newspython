@@ -24,19 +24,19 @@ class PostList(ListView):
     template_name = 'news.html'
     context_object_name = 'posts'
     paginate_by = 10
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        self.filterset = PostFilter(self.request.GET, queryset)
-        return self.filterset.qs
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['time_now'] = datetime.utcnow()
-        context['next_news'] = None
-        context['filterset'] = self.filterset
-        pprint(context)
-        return context
+    #
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     self.filterset = PostFilter(self.request.GET, queryset)
+    #     return self.filterset.qs
+    #
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['time_now'] = datetime.utcnow()
+    #     context['next_news'] = None
+    #     context['filterset'] = self.filterset
+    #     pprint(context)
+    #     return context
 
 
 class PostDetail(DetailView):
@@ -60,3 +60,22 @@ class PostDelete(DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('post_list')
+
+class PostSearch(ListView):
+    form_class = PostFilter
+    model = Post
+    template_name = 'post_search.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.filterset = PostFilter(self.request.GET, queryset)
+        return self.filterset.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['time_now'] = datetime.utcnow()
+        context['next_news'] = None
+        context['filterset'] = self.filterset
+        pprint(context)
+        return context
+
