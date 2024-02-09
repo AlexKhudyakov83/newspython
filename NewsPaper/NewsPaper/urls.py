@@ -20,8 +20,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('homepage/', include('django.contrib.flatpages.urls')),
-
+    # path('news/search', include('news.urls')),
     path('news/', include('news.urls')),
     path('news/<int:pk>', include('news.urls')),
-    path('news/33/', include('django.contrib.flatpages.urls'))
+    path('news/33/', include('django.contrib.flatpages.urls')),
 ]

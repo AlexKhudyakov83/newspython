@@ -3,12 +3,12 @@ from .models import Post
 
 
 class PostForm(forms.ModelForm):
-   class Meta:
-       model = Post
-       fields = [
-           'author',
-           'categoryType',
-           'title',
-           'text',
-           'rating'
-                 ]
+
+    class Meta:
+        model = Post
+        fields = [
+            'author',
+            'categoryType',
+            'title',
+            'text',
+            'rating']
