@@ -6,7 +6,7 @@ from .models import Author, Post
 from datetime import datetime
 from pprint import pprint
 from .filters import PostFilter
-from .forms import PostForm
+from .forms import PostForm, PostFormArticle
 from django.urls import reverse_lazy
 
 
@@ -38,16 +38,49 @@ class PostCreate(CreateView):
     template_name = 'post_edit.html'
 
 
+class PostCreateArticle(CreateView):
+    form_class = PostFormArticle
+    model = Post
+    template_name = 'post_edit.html'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.categoryType = 'Статья'
+        return super().form_valid(form)
+
+
 class PostUpdate(UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
 
 
+class PostUpdateArticle(UpdateView):
+    form_class = PostFormArticle
+    model = Post
+    template_name = 'post_edit.html'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.categoryType = 'Статья'
+        return super().form_valid(form)
+
+
 class PostDelete(DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('post_list')
+
+
+class PostDeleteArticle(DeleteView):
+    model = Post
+    template_name = 'post_delete.html'
+    success_url = reverse_lazy('post_list')
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.categoryType = 'Статья'
+        return super().form_valid(form)
 
 
 class PostSearch(ListView):

@@ -12,3 +12,14 @@ class PostForm(forms.ModelForm):
             'title',
             'text',
             'rating']
+
+
+class PostFormArticle(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = [
+            'author',
+            'title',
+            'text',
+            'rating']
