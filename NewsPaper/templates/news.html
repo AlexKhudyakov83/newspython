@@ -1,6 +1,6 @@
 {% extends 'flatpages/default.html' %}
 
-<!--{% load custom_tags %}-->
+{% load custom_tags %}
 
 {% block title %}
 Posts
@@ -11,6 +11,10 @@ Posts
    <h3>{{ time_now|date:'M d Y' }}</h3>
    <h3> {{ next_news|default_if_none:"Для Вас только свежие новости." }} </h3>
    <hr>
+   {% if perms.news.post_create %}
+   <a href="{% url 'post_create' %}">Добавьте новость</a>
+   {% endif %}
+
    {% if posts %}
        <table>
            <tr>
@@ -27,6 +31,7 @@ Posts
                <td>{{ post.text|truncatechars:10 }}</td>
                <td>{{ post.rating }}</td>
                <td>{{ post.postCategory }}</td>
+
            </tr>
            {% endfor %}
 

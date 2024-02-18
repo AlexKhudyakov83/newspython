@@ -8,7 +8,7 @@ from pprint import pprint
 from .filters import PostFilter
 from .forms import PostForm, PostFormArticle
 from django.urls import reverse_lazy
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class Author(ListView):
@@ -32,13 +32,15 @@ class PostDetail(DetailView):
     context_object_name = 'news'
 
 
-class PostCreate(CreateView):
+class PostCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.post_create',)
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
 
 
-class PostCreateArticle(CreateView):
+class PostCreateArticle(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.post_article_create',)
     form_class = PostFormArticle
     model = Post
     template_name = 'post_edit.html'
@@ -49,13 +51,15 @@ class PostCreateArticle(CreateView):
         return super().form_valid(form)
 
 
-class PostUpdate(UpdateView):
+class PostUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.post_update',)
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
 
 
-class PostUpdateArticle(UpdateView):
+class PostUpdateArticle(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.post_article_update',)
     form_class = PostFormArticle
     model = Post
     template_name = 'post_edit.html'
