@@ -13,14 +13,17 @@ from .filters import PostFilter
 from .forms import PostForm, PostFormArticle
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.http import HttpResponse
+from django.views import View
+from .tasks import hello, printer
 
 
 
-# class Author(ListView):
-#     model = Author
-#     ordering = 'name'
-#     template_name = 'author.html'
-#     context_object_name = 'authors'
+class Author(ListView):
+    model = Author
+    ordering = 'name'
+    template_name = 'author.html'
+    context_object_name = 'authors'
 
 
 class PostList(ListView):
