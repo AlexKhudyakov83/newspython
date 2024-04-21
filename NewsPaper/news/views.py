@@ -15,7 +15,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponse
 from django.views import View
-from .tasks import hello, printer
+# from .tasks import hello, printer
 
 
 
