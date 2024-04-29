@@ -181,3 +181,104 @@ CACHES = {
         'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
     }
 }
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'style': '{',
+    'formatters': {
+        'simple': {
+            'format': '%(asctime)s %(levelname)s %(message)s',
+            'datetime': '%H:%M:%S %d%m'
+        },
+        'simple_general': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(message)s',
+            'datetime': '%H:%M:%S %d%m'
+        },
+        'simple_warning': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s',
+            'datetime': '%H:%M:%S %d%m'
+        },
+        'simple_error': {
+            'format': '%(asctime)s %(levelname)s %(message)s %(pathname)s %(exc_info)s',
+            'datetime': '%H:%M:%S %d%m'
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'news_warning': {
+            'level': 'WARNING',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple_warning'
+        },
+        'news_er_cr': {
+            'level': 'WARNING',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple_error'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'news_general': {
+            'level': 'INFO',
+            'filters': ['require_debug_false'],
+            'class': 'logging.FileHandler',
+            'filename': 'general.log',
+            'formatter': 'simple_general'
+        },
+        'news_security': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'security.log',
+            'formatter': 'simple'
+        },
+        'news_errors': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'errors.log',
+            'formatter': 'simple_error'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'news_general', 'news_security',
+                         'news_warning', 'news_er_cr']
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+        },
+        'django.server': {
+            'handlers': ['news_errors'],
+            'level': 'ERROR',
+        },
+        'django.template': {
+            'handlers': ['news_errors'],
+            'level': 'ERROR',
+        },
+        'django.db.backends': {
+            'handlers': ['news_errors'],
+            'level': 'ERROR',
+        },
+        'django.security': {
+            'handlers': ['news_security'],
+            'level': 'DEBUG',
+        }
+    }
+}
